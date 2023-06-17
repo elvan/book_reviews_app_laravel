@@ -35,9 +35,15 @@ class Book extends Model
 
     public function scopeWithRecentReviews(Builder $query, \Closure $interval): Builder
     {
-        return $query->whereHas('reviews', function (Builder $q) use ($interval) {
-            $q->whereBetween('created_at', [$interval(now()), now()]);
-        });
+        return $query->whereHas(
+            'reviews',
+            function (Builder $q) use ($interval) {
+                $q->whereBetween(
+                    'created_at',
+                    [$interval(now()), now()]
+                );
+            }
+        );
     }
 
     public function scopeWithLastWeekReviews(Builder $query): Builder
